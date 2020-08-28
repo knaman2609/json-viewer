@@ -124,3 +124,8 @@ var parsedJson = parseJson(json);
 
 NodeList.prototype.forEach = Array.prototype.forEach
 createSidebar(parsedJson, document.getElementById("sidebar"));
+
+// More levels
+// BetterSelection
+// File Upload
+// Impl in PS
