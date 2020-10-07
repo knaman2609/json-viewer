@@ -19,6 +19,12 @@ var PS = {};
   exports["log"] = $foreign.log;
 })(PS);
 (function(exports) {
+  
+  exports["createNode"] = function() {
+      var node = document.createElement("div");
+      return node;
+  }
+
   function closeAll() {
       openChildren.forEach(function(item){
           if (item.style) {
@@ -160,5 +166,6 @@ var PS = {};
   };
   exports["main"] = main;
   exports["runFn"] = $foreign.runFn;
+  exports["createNode"] = $foreign.createNode;
 })(PS);
 PS["Main"].main();

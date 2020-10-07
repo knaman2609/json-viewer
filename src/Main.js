@@ -1,3 +1,15 @@
+
+exports["createNode"] = function() {
+    var node = document.createElement("div");
+    return node;
+}
+
+exports["hideNode"] = function(node) {
+    return function() {
+        node.style.display = "none";
+    }
+}
+
 function closeAll() {
     openChildren.forEach(function(item){
         if (item.style) {
