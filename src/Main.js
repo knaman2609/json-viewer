@@ -1,4 +1,3 @@
-
 exports["createNode"] = function() {
     var node = document.createElement("div");
     return node;
@@ -9,6 +8,33 @@ exports["hideNode"] = function(node) {
         node.style.display = "none";
     }
 }
+
+exports["addClass"] = function(node) {
+    return function(className) {
+        return function() {
+            node.classList.add(className);
+        }
+    }
+}
+
+exports["removeClass"] = function(node) {
+    return function(className) {
+        return function() {
+            node.classList.remove(className);
+        }
+    }
+}
+
+exports["getNode"] = function() {
+    return {}
+}
+
+exports["updateText"] = function(text) {
+    return function() {
+        document.getElementById("content").textContent = JSON.stringify(text, null, 4); ;
+    }
+}
+
 
 function closeAll() {
     openChildren.forEach(function(item){
