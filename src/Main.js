@@ -29,9 +29,17 @@ exports["getNode"] = function() {
     return {}
 }
 
-exports["updateText"] = function(text) {
+exports["showJson"] = function(text) {
     return function() {
         document.getElementById("content").textContent = JSON.stringify(text, null, 4); ;
+    }
+}
+
+exports["addText"] = function(node) {
+    return function(text) {
+        return function() {
+            node.textContent = name;
+        }
     }
 }
 
@@ -105,7 +113,8 @@ function createSidebarRecursive(sideBarJson, parentKey, contentJson ,rootNode, l
         var node = createLevel(keys[i], parentKey, contentJson,rootNode, level);
 
         createSidebarRecursive(sideBarJson[keys[i]], keys[i], contentJson, node, level + 1);
-    }
+    
+}
 }
 
 function createSidebar(parsedJson, rootNode) {

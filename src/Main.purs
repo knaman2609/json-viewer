@@ -3,6 +3,7 @@ module Main where
 import Prelude
 import Effect (Effect)
 import Effect.Console (log)
+import Data.Maybe
 
 foreign import runFn  :: Effect Unit
 
@@ -15,7 +16,11 @@ foreign import hideNode :: Node -> Effect Node
 foreign import addClass :: Node -> String -> Effect Unit
 foreign import removeClass :: Node -> String -> Effect Unit
 foreign import getNode :: Effect Node
-foreign import updateText :: String -> Effect Unit
+foreign import showJson :: String -> Effect Unit
+foreign import addText :: Node -> String -> Effect Unit
+
+keys :: JSON -> Array String
+keys json = [""]
 
 closeAll :: Children -> Effect Unit
 closeAll children = do
@@ -43,15 +48,38 @@ showContent node name json level = do
     closeAll  [children]
   else do
     -- updateText json.name
-    updateText "hello"
+    showJson "hello"
     pure unit
 
 
-createLevel :: String -> String -> JSON -> Node -> Int
+createLevel :: String -> String -> JSON -> Node -> Int -> Effect Node
 createLevel name parentKey json rootNode level = do
   node <- createNode
+  addClass node ("level l-" <> "level")
+  addText node name
+
+  --- event Listner
+
+  pure $ node
 
 
+createSidebarRecursive  :: Maybe JSON -> String -> JSON -> Node -> Int -> Effect Unit
+createSidebarRecursive sideBarJson parentKey contentJson rootNode level = do
+  case sideBarJson of
+    Just json -> do
+      let k = keys json
+
+      pure unit
+
+    Nothing -> pure unit
+
+
+parseJsonRecursive  :: JSON -> String -> JSON -> JSON -> Int -> Effect Unit
+parseJsonRecursive json parentKey sideBarJson contentJson level = pure unit
+
+
+parseJson :: JSON -> Effect Unit
+parseJson json = pure unit
 
 
 main :: Effect Unit
