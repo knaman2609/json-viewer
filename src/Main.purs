@@ -16,6 +16,7 @@ foreign import hideNode :: Node -> Effect Node
 foreign import addClass :: Node -> String -> Effect Unit
 foreign import removeClass :: Node -> String -> Effect Unit
 foreign import getNode :: Effect Node
+foreign import getJson :: Effect JSON
 foreign import showJson :: String -> Effect Unit
 foreign import addText :: Node -> String -> Effect Unit
 
@@ -74,16 +75,42 @@ createSidebarRecursive sideBarJson parentKey contentJson rootNode level = do
     Nothing -> pure unit
 
 
-parseJsonRecursive  :: JSON -> String -> JSON -> JSON -> Int -> Effect Unit
-parseJsonRecursive json parentKey sideBarJson contentJson level = pure unit
+createSidebar  :: {sideBarJson :: JSON, contentJson :: JSON} -> Node -> Effect Unit
+createSidebar json rootNode =
+  createSidebarRecursive (Just json.sideBarJson) "" json.contentJson rootNode 1
 
 
-parseJson :: JSON -> Effect Unit
-parseJson json = pure unit
+parseJsonRecursive  :: Maybe JSON -> String -> JSON -> JSON -> Int -> Effect Unit
+parseJsonRecursive json parentKey sideBarJson contentJson level = do
+  case json of
+    Just json -> do
+      let k = keys json
+      pure unit
+
+    Nothing -> pure unit
+
+
+parseJson :: JSON -> Effect {sideBarJson :: JSON, contentJson :: JSON}
+parseJson json = do
+  sideBarJson <- getJson
+  contentJson <- getJson
+
+  parseJsonRecursive (Just json) "" sideBarJson contentJson 1
+
+  pure $  {sideBarJson: sideBarJson, contentJson : contentJson}
 
 
 main :: Effect Unit
 main = do
   runFn
+
+  json <- getJson
+  node <- getNode
+
+  -- replace json with json in window
+  rec <- parseJson json
+
+  createSidebar rec node
+
 
   log "hello"

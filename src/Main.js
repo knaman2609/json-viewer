@@ -29,6 +29,10 @@ exports["getNode"] = function() {
     return {}
 }
 
+exports["getJson"] = function() {
+    return {}
+}
+
 exports["showJson"] = function(text) {
     return function() {
         document.getElementById("content").textContent = JSON.stringify(text, null, 4); ;
@@ -113,7 +117,7 @@ function createSidebarRecursive(sideBarJson, parentKey, contentJson ,rootNode, l
         var node = createLevel(keys[i], parentKey, contentJson,rootNode, level);
 
         createSidebarRecursive(sideBarJson[keys[i]], keys[i], contentJson, node, level + 1);
-    
+
 }
 }
 
